@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sicherheit & Compliance – relationflow.io</title>
+<meta name="description" content="Enterprise-Sicherheit von relationflow.io: EU-Hosting, AES-256-Verschlüsselung, SSO/RBAC/SCIM, lückenloses Audit-Log, DSGVO, ISO 27001, EU AI Act, §203 StGB, AV-Vertrag und Subunternehmer-Transparenz." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Lora:ital@1&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+@property --eb-ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+:root{
+  --bg:#f9fafb;--bg-alt:#f4f6f8;--surface:#fff;--text:#050b10;--muted:#4c575f;--muted-2:#79858d;
+  --accent:#833af0;--accent-dark:#6800cd;--accent-light:#a883ff;--accent-soft:rgba(131,58,240,.08);--accent-soft-2:rgba(131,58,240,.14);
+  --line:#e7eaee;--line-strong:#d8dde2;
+  --shadow-sm:0 1px 2px rgba(5,11,16,.04),0 2px 8px rgba(5,11,16,.04);
+  --shadow-md:0 12px 32px -12px rgba(5,11,16,.16),0 4px 12px -6px rgba(5,11,16,.08);
+  --shadow-lg:0 32px 64px -24px rgba(38,16,80,.28);
+  --radius:22px;--radius-lg:30px;--maxw:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Space Grotesk",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.serif{font-family:"Lora",Georgia,serif;font-style:italic;font-weight:400;color:var(--text)}
+h1,h2,h3{font-weight:700;letter-spacing:-0.03em;line-height:1.05}
+h1{font-size:clamp(2.4rem,5.4vw,4rem)}
+h2{font-size:clamp(1.8rem,3.6vw,2.7rem)}
+h3{font-size:1.12rem;letter-spacing:-0.02em}
+.lead{color:var(--muted);font-size:clamp(1.02rem,1.6vw,1.18rem);font-weight:400}
+.section{padding:clamp(56px,8vw,104px) 0}
+.section.tight{padding:clamp(36px,5vw,64px) 0}
+.sec-center{text-align:center;max-width:780px;margin:0 auto}
+.eyebrow{position:relative;display:inline-flex;align-items:center;gap:10px;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-dark);background:linear-gradient(180deg,#fff,#f6f1ff);border-radius:999px;padding:7px 18px 7px 7px;box-shadow:0 1px 2px rgba(80,40,160,.05),0 12px 28px -16px rgba(124,58,237,.6)}
+.eyebrow::before{content:"";position:absolute;inset:0;border-radius:999px;padding:1.5px;pointer-events:none;background:conic-gradient(from var(--eb-ang),#c9b6ff,#7c3aed,#a883ff,#5b16c0,#c9b6ff);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ebSpin 6s linear infinite}
+@keyframes ebSpin{to{--eb-ang:360deg}}
+.eyebrow .dot{position:relative;width:22px;height:22px;border-radius:7px;flex-shrink:0;background:linear-gradient(140deg,#9a5cf5,#6d28d9);box-shadow:0 3px 9px rgba(124,58,237,.55),inset 0 1px 0 rgba(255,255,255,.45)}
+.eyebrow .dot::after{content:"";position:absolute;inset:0;background:#fff;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2 L13.9 9.5 L21.5 12 L13.9 14.5 L12 22 L10.1 14.5 L2.5 12 L10.1 9.5 Z'/%3E%3C/svg%3E") center/13px no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2 L13.9 9.5 L21.5 12 L13.9 14.5 L12 22 L10.1 14.5 L2.5 12 L10.1 9.5 Z'/%3E%3C/svg%3E") center/13px no-repeat}
+@media(prefers-reduced-motion:reduce){.eyebrow::before{animation:none}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:inherit;font-weight:600;font-size:.98rem;padding:15px 26px;border-radius:999px;cursor:pointer;border:1px solid transparent;transition:transform .18s,box-shadow .25s;white-space:nowrap;min-height:48px}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:#fff;box-shadow:0 10px 26px -10px rgba(131,58,240,.7)}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-ghost{background:var(--surface);color:var(--text);border-color:var(--line-strong);box-shadow:var(--shadow-sm)}
+.btn-ghost:hover{transform:translateY(-2px);border-color:var(--accent-light);color:var(--accent-dark)}
+.btn-light{background:#fff;color:var(--accent-dark)}.btn-light:hover{transform:translateY(-2px)}
+.btn-outline-light{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}.btn-outline-light:hover{background:rgba(255,255,255,.12)}
+/* nav */
+.nav-shell{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 24px;transition:padding .3s}
+.nav{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;background:rgba(255,255,255,.72);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border:1px solid rgba(231,234,238,.9);border-radius:999px;padding:10px 12px 10px 24px;box-shadow:0 10px 30px -16px rgba(5,11,16,.18)}
+.brand{font-weight:700;font-size:1.28rem;letter-spacing:-0.03em;display:flex;align-items:center}
+.brand .io{font-family:"Instrument Serif",serif;font-style:italic;color:var(--accent);font-weight:400;margin-left:1px}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-item{position:relative}
+.nav-link{display:inline-flex;align-items:center;gap:5px;padding:10px 14px;border-radius:999px;font-weight:500;font-size:.96rem;cursor:pointer;transition:background .18s,color .18s}
+.nav-link:hover{background:var(--accent-soft);color:var(--accent-dark)}
+.nav-link.active{color:var(--accent-dark);font-weight:600}
+.nav-link .chev{width:12px;height:12px;transition:transform .2s}
+.nav-item:hover .nav-link .chev{transform:rotate(180deg)}
+.dropdown{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(8px);background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow-lg);padding:18px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s,transform .22s;z-index:50;width:300px}
+.nav-item:hover .dropdown{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.nav-item .dropdown::before{content:"";position:absolute;left:0;right:0;top:-18px;height:18px}
+.dd-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:14px;transition:background .15s}
+.dd-link:hover{background:var(--accent-soft)}.dd-link b{font-weight:600;font-size:.94rem}.dd-link:hover b{color:var(--accent-dark)}
+.nav-cta{display:flex;align-items:center;gap:6px}
+.nav-login{padding:10px 14px;font-weight:500;font-size:.96rem;border-radius:999px}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:10px}
+.burger span{width:22px;height:2px;background:var(--text);border-radius:2px}
+.mobile-menu{display:none}
+/* hero */
+.s-hero{padding:150px 0 30px;text-align:center;position:relative;overflow:visible}
+.s-hero::before{content:"";position:absolute;top:-6%;left:50%;transform:translateX(-50%);width:860px;height:520px;max-width:120vw;background:radial-gradient(50% 50% at 50% 40%,rgba(131,58,240,.14),transparent 70%);z-index:0;pointer-events:none}
+.s-hero .wrap{position:relative;z-index:1}
+.s-hero h1{margin:24px auto 0;max-width:17ch}
+.s-hero .lead{margin:20px auto 0;max-width:58ch}
+.s-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+/* cert strip */
+.certs{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:40px}
+.cert{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 16px;box-shadow:var(--shadow-sm);font-weight:600;font-size:.86rem}
+.cert .ic{width:30px;height:30px;border-radius:9px;background:var(--accent-soft);color:var(--accent-dark);display:flex;align-items:center;justify-content:center}
+.cert .ic svg{width:17px;height:17px}
+.cert small{display:block;font-size:.7rem;font-weight:500;color:var(--muted-2)}
+/* pillars bento */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:50px}
+.pill{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow-sm);transition:transform .25s,box-shadow .25s,border-color .25s;overflow:hidden}
+.pill:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);border-color:var(--accent-light)}
+.pill .pic{width:48px;height:48px;border-radius:14px;background:var(--accent-soft);color:var(--accent-dark);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.pill .pic svg{width:24px;height:24px}
+.pill h3{margin-bottom:8px}
+.pill p{color:var(--muted);font-size:.94rem}
+/* detail rows */
+.det{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(32px,5vw,68px);align-items:center}
+.det+.det{margin-top:clamp(56px,8vw,104px)}
+.det.rev .det-text{order:2}
+.det-text h2{font-size:clamp(1.6rem,3vw,2.2rem)}
+.det-text .lead{margin-top:14px;font-size:1.02rem}
+.det-list{list-style:none;display:flex;flex-direction:column;gap:13px;margin-top:24px}
+.det-list li{display:flex;gap:12px;align-items:flex-start;font-size:.97rem}
+.det-list .ck{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent-dark);display:flex;align-items:center;justify-content:center;margin-top:1px}
+.spec{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-md);overflow:hidden}
+.spec-h{display:flex;align-items:center;gap:9px;padding:15px 20px;border-bottom:1px solid var(--line);background:var(--bg-alt);font-weight:700;font-size:.92rem}
+.spec-h .d{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.18)}
+.spec-row{display:flex;justify-content:space-between;gap:16px;padding:13px 20px;border-bottom:1px solid var(--line);font-size:.9rem}
+.spec-row:last-child{border-bottom:none}
+.spec-row .k{color:var(--muted)}
+.spec-row .v{font-weight:600;text-align:right}
+.spec-row .v.ok{color:var(--accent-dark)}
+/* frameworks grid */
+.fw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:46px}
+.fw{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow-sm)}
+.fw .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.fw .nm{font-weight:700}
+.fw .st{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:4px 9px;border-radius:999px}
+.fw .st.live{background:#e8f8ee;color:#16a34a}
+.fw .st.prog{background:var(--accent-soft);color:var(--accent-dark)}
+.fw p{color:var(--muted);font-size:.88rem}
+/* controls checklist (dark) */
+.dark{position:relative;overflow:hidden;border-radius:var(--radius-lg);margin:0 48px;color:#fff;padding:clamp(56px,8vw,90px) 0;background:radial-gradient(55% 70% at 50% 14%,rgba(124,58,237,.28),transparent 60%),radial-gradient(45% 60% at 85% 12%,rgba(168,85,247,.14),transparent 55%),linear-gradient(180deg,#08060d,#0a0710)}
+.dark::after{content:"";position:absolute;inset:0;background:radial-gradient(125% 120% at 50% 30%,transparent 48%,rgba(0,0,0,.6));pointer-events:none}
+.dark>.wrap{position:relative;z-index:1}
+.dark .eyebrow{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));color:#dcccff}
+.dark h2{color:#fff}.dark .serif{color:#fff}.dark .lead{color:#b4abc6}
+.ctrl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 40px;margin-top:46px}
+.ctrl-col h4{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-light);font-weight:700;margin:18px 0 6px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.12)}
+.ctrl{display:flex;gap:11px;align-items:flex-start;padding:8px 0;font-size:.92rem;color:#d8d2e6}
+.ctrl .ck{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:rgba(168,131,255,.2);color:#c4b5fd;display:flex;align-items:center;justify-content:center;margin-top:1px}
+/* tables */
+.cmp{margin-top:38px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff;box-shadow:var(--shadow-sm)}
+.cmp-scroll{overflow-x:auto}
+.cmp table{width:100%;border-collapse:collapse}
+.cmp th,.cmp td{padding:14px 18px;text-align:left;font-size:.9rem;border-bottom:1px solid var(--line)}
+.cmp thead th{font-weight:700;background:var(--bg-alt);font-size:.92rem}
+.cmp tr:last-child td{border-bottom:none}
+.cmp .tag{display:inline-block;font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent-dark)}
+@media(max-width:760px){.cmp table{min-width:640px}}
+/* small cards row */
+.mini3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
+.mini{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow-sm)}
+.mini .mic{width:42px;height:42px;border-radius:12px;background:var(--accent-soft);color:var(--accent-dark);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.mini h3{margin-bottom:7px}.mini p{color:var(--muted);font-size:.92rem}
+/* faq */
+.faq-list{max-width:820px;margin:34px auto 0}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{display:flex;gap:16px;align-items:center;padding:22px 4px;cursor:pointer;font-weight:600;font-size:1.05rem;letter-spacing:-0.01em}
+.faq-q .num{color:var(--accent);font-family:"Lora",serif;font-style:italic;font-size:1.1rem;flex-shrink:0}
+.faq-q .pm{margin-left:auto;width:26px;height:26px;flex-shrink:0;border-radius:50%;border:1px solid var(--line-strong);display:flex;align-items:center;justify-content:center;transition:.25s;color:var(--accent-dark)}
+.faq-item.open .faq-q .pm{background:var(--accent);color:#fff;border-color:var(--accent);transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;color:var(--muted)}
+.faq-a div{padding:0 4px 24px 44px;font-size:.97rem;max-width:74ch}
+/* cta */
+.cta-band{margin:0 48px;border-radius:var(--radius-lg);color:#fff;text-align:center;padding:clamp(56px,8vw,92px) 24px;position:relative;overflow:hidden;background:radial-gradient(60% 80% at 50% 18%,rgba(139,79,255,.42),transparent 60%),radial-gradient(45% 60% at 85% 12%,rgba(168,85,247,.2),transparent 55%),radial-gradient(60% 80% at 50% 120%,rgba(91,33,182,.3),transparent 62%),linear-gradient(180deg,#0a0712,#0b0714)}
+.cta-band h2{color:#fff;max-width:18ch;margin:0 auto}.cta-band p{color:rgba(255,255,255,.88);max-width:56ch;margin:18px auto 0;font-size:1.06rem}.cta-band .serif{color:#fff}
+.cta-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+/* footer */
+.footer{padding:72px 0 36px}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:32px}
+.foot-brand .brand{font-size:1.35rem;margin-bottom:14px}.foot-brand p{color:var(--muted);font-size:.92rem;max-width:30ch}
+.foot-col h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted-2);margin-bottom:16px;font-weight:600}
+.foot-col a{display:block;color:var(--muted);font-size:.92rem;padding:6px 0}.foot-col a:hover{color:var(--accent-dark)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted-2);font-size:.86rem}
+.foot-badges{display:flex;gap:8px;flex-wrap:wrap}
+.foot-badges span{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-weight:600;color:var(--muted)}
+@media(max-width:960px){.pillars,.fw-grid,.mini3{grid-template-columns:1fr 1fr}.ctrl-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.nav-links,.nav-cta .nav-login{display:none}.burger{display:flex}.det{grid-template-columns:1fr}.det.rev .det-text{order:0}
+  .mobile-menu.open{display:flex;flex-direction:column;gap:6px;position:fixed;inset:84px 16px auto 16px;z-index:99;background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow-lg);padding:16px}
+  .mobile-menu.open a{padding:11px 12px;font-weight:600;border-radius:12px}.mobile-menu.open .btn{width:100%}
+  .dark,.cta-band{margin:0 16px}.foot-grid{grid-template-columns:1fr 1fr}.foot-brand{grid-column:span 2}}
+@media(max-width:620px){.pillars,.fw-grid,.mini3{grid-template-columns:1fr}.certs{gap:8px}.foot-grid{grid-template-columns:1fr}.foot-brand{grid-column:span 1}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav-shell">
+  <nav class="nav" aria-label="Hauptnavigation">
+    <a href="relationflow_website.html" class="brand">relationflow<span class="io">.io</span></a>
+    <div class="nav-links">
+      <div class="nav-item"><span class="nav-link" tabindex="0">Features <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
+        <div class="dropdown"><a class="dd-link" href="relationflow_feature_multimodell.html"><b>Multi-Modell Access</b></a><a class="dd-link" href="relationflow_feature_agents.html"><b>Intelligente Agents</b></a><a class="dd-link" href="relationflow_feature_spaces.html"><b>Spaces &amp; Collaboration</b></a><a class="dd-link" href="relationflow_feature_chat.html"><b>Enterprise Chat</b></a><a class="dd-link" href="relationflow_feature_rag.html"><b>Wissensdatenbank (RAG)</b></a><a class="dd-link" href="relationflow_feature_byom.html"><b>Bring Your Own Model (BYOM)</b></a><a class="dd-link" href="relationflow_feature_audit.html"><b>Versionierung &amp; Audit</b></a></div>
+      </div>
+      <div class="nav-item"><span class="nav-link" tabindex="0">Anwendungsfälle <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
+        <div class="dropdown"><a class="dd-link" href="relationflow_uc_vertrieb.html"><b>Vertrieb &amp; Sales</b></a><a class="dd-link" href="relationflow_uc_marketing.html"><b>Marketing &amp; Content</b></a><a class="dd-link" href="relationflow_uc_support.html"><b>Customer Support</b></a><a class="dd-link" href="relationflow_uc_operations.html"><b>Operations</b></a><a class="dd-link" href="relationflow_uc_it.html"><b>IT &amp; Entwicklung</b></a><a class="dd-link" href="relationflow_uc_hr.html"><b>HR &amp; Recruiting</b></a></div>
+      </div>
+      <div class="nav-item"><span class="nav-link" tabindex="0">Lösungen <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
+        <div class="dropdown"><a class="dd-link" href="relationflow_loesung_kmu.html"><b>Allgemeine KMU</b></a><a class="dd-link" href="relationflow_loesung_recht.html"><b>Rechtsanwälte &amp; Juristen</b></a><a class="dd-link" href="relationflow_loesung_medizin.html"><b>Medizin &amp; Gesundheit</b></a><a class="dd-link" href="relationflow_loesung_finanz.html"><b>Finanzsektor &amp; Banking</b></a><a class="dd-link" href="relationflow_loesung_verwaltung.html"><b>Öffentliche Verwaltung</b></a></div>
+      </div>
+      <a href="relationflow_sicherheit.html" class="nav-link active">Sicherheit</a>
+      <a href="relationflow_preise.html" class="nav-link">Preise</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#" class="nav-login">Login</a>
+      <a href="#" class="btn btn-primary">Kostenlos starten</a>
+      <button class="burger" id="burger" aria-label="Menü"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="relationflow_website.html">Features</a>
+  <a href="relationflow_website.html#abteilungen">Anwendungsfälle</a>
+  <a href="relationflow_website.html#abteilungen">Lösungen</a>
+  <a href="relationflow_sicherheit.html">Sicherheit</a>
+  <a href="relationflow_preise.html">Preise</a>
+  <a href="#" class="btn btn-ghost">Login</a>
+  <a href="#" class="btn btn-primary">Kostenlos starten</a>
+</div>
+
+<!-- HERO -->
+<section class="s-hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>Sicherheit &amp; Compliance</span>
+    <h1>Sicherheit, die in jede <span class="serif">Zeile</span> eingebaut ist.</h1>
+    <p class="lead">relationflow ist von Grund auf für regulierte Branchen gebaut: EU-Hosting, Verschlüsselung auf jeder Ebene, granulare Zugriffskontrolle und lückenlose Nachvollziehbarkeit – dokumentiert und prüfbar.</p>
+    <div class="s-cta">
+      <a href="#" class="btn btn-primary">AV-Vertrag anfordern</a>
+      <a href="#" class="btn btn-ghost">Security-Whitepaper laden</a>
+    </div>
+    <div class="certs">
+      <span class="cert"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg></span>DSGVO<small>Art. 28 AV-Vertrag</small></span>
+      <span class="cert"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>EU-Hosting<small>Frankfurt, DE</small></span>
+      <span class="cert"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4L12 17l-6.3 4.4L8 14 2 9.4h7.6z"/></svg></span>ISO/IEC 27001<small>zertifiziert</small></span>
+      <span class="cert"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg></span>EU AI Act<small>konform</small></span>
+      <span class="cert"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3v18M6 7h12M6 7l-3 6a3 3 0 0 0 6 0zM18 7l-3 6a3 3 0 0 0 6 0z"/></svg></span>§203 StGB<small>Berufsgeheimnis</small></span>
+      <span class="cert"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>SOC 2 Type II<small>in Vorbereitung</small></span>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="section tight"><div class="wrap">
+  <div class="sec-center">
+    <span class="eyebrow"><span class="dot"></span>Die Grundpfeiler</span>
+    <h2 style="margin-top:18px">Sechs Versprechen, auf die <span class="serif">Verlass</span> ist.</h2>
+  </div>
+  <div class="pillars">
+    <div class="pill"><div class="pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div><h3>Datenresidenz in der EU</h3><p>Speicherung und Verarbeitung ausschließlich in europäischen Rechenzentren – keine Drittlandtransfers.</p></div>
+    <div class="pill"><div class="pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>Ende-zu-Ende-Verschlüsselung</h3><p>TLS 1.3 bei Übertragung, AES-256 im Ruhezustand, verwaltete Schlüssel mit optionalem CMEK.</p></div>
+    <div class="pill"><div class="pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64M12 2v10"/></svg></div><h3>Kein Training mit euren Daten</h3><p>Eingaben, Dokumente und Ausgaben fließen niemals in das Training fremder Modelle. Vertraglich garantiert.</p></div>
+    <div class="pill"><div class="pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Granulare Zugriffskontrolle</h3><p>SSO, SCIM, MFA und rollenbasierte Rechte (RBAC) bis auf Space- und Dokumentenebene.</p></div>
+    <div class="pill"><div class="pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2"/></svg></div><h3>Lückenloses Audit-Log</h3><p>Jede Aktion unveränderlich protokolliert, exportierbar in euer SIEM – revisionssicher.</p></div>
+    <div class="pill"><div class="pic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/></svg></div><h3>On-Premise &amp; BYOM</h3><p>Betrieb in eurer eigenen Cloud oder On-Premise – mit eigenen Modellen, ganz ohne Datenabfluss.</p></div>
+  </div>
+</div></section>
+
+<!-- DETAIL A: EU-Hosting -->
+<section class="section"><div class="wrap">
+  <div class="det">
+    <div class="det-text">
+      <span class="eyebrow"><span class="dot"></span>Datenresidenz</span>
+      <h2 style="margin-top:16px">Eure Daten verlassen Europa <span class="serif">nicht</span>.</h2>
+      <p class="lead">Hosting in zertifizierten EU-Rechenzentren mit georedundantem Failover. Auf Wunsch betreiben wir relationflow in eurer eigenen VPC oder vollständig On-Premise.</p>
+      <ul class="det-list">
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Primärregion Frankfurt (DE), Failover innerhalb der EU</li>
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Keine Übermittlung in Drittländer, kein US-Cloud-Act-Zugriff</li>
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Optional: On-Premise oder eigene Cloud (VPC, eu-central-1)</li>
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Datentrennung pro Mandant (Logical Isolation)</li>
+      </ul>
+    </div>
+    <div class="spec">
+      <div class="spec-h"><span class="d"></span>Infrastruktur</div>
+      <div class="spec-row"><span class="k">Primärregion</span><span class="v">Frankfurt · DE</span></div>
+      <div class="spec-row"><span class="k">Failover</span><span class="v">EU georedundant</span></div>
+      <div class="spec-row"><span class="k">Verfügbarkeit (SLA)</span><span class="v ok">99,9 %</span></div>
+      <div class="spec-row"><span class="k">Drittlandtransfer</span><span class="v ok">keiner</span></div>
+      <div class="spec-row"><span class="k">Deployment-Optionen</span><span class="v">Cloud · VPC · On-Prem</span></div>
+      <div class="spec-row"><span class="k">Mandantentrennung</span><span class="v ok">aktiv</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- DETAIL B: Verschlüsselung -->
+<section class="section"><div class="wrap">
+  <div class="det rev">
+    <div class="det-text">
+      <span class="eyebrow"><span class="dot"></span>Verschlüsselung</span>
+      <h2 style="margin-top:16px">Verschlüsselt auf <span class="serif">jeder</span> Ebene.</h2>
+      <p class="lead">Daten sind in Bewegung und im Ruhezustand verschlüsselt. Schlüssel werden in einem verwalteten KMS rotiert – auf Wunsch mit kundenverwalteten Schlüsseln (CMEK).</p>
+      <ul class="det-list">
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>TLS 1.3 für sämtliche Verbindungen</li>
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>AES-256 im Ruhezustand, inkl. Backups</li>
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Automatische Schlüsselrotation, isolierte Secrets</li>
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Optional: Customer-Managed Encryption Keys (CMEK)</li>
+      </ul>
+    </div>
+    <div class="spec">
+      <div class="spec-h"><span class="d"></span>Krypto-Stack</div>
+      <div class="spec-row"><span class="k">In Transit</span><span class="v">TLS 1.3</span></div>
+      <div class="spec-row"><span class="k">At Rest</span><span class="v">AES-256-GCM</span></div>
+      <div class="spec-row"><span class="k">Key Management</span><span class="v">KMS · HSM-gestützt</span></div>
+      <div class="spec-row"><span class="k">Schlüsselrotation</span><span class="v ok">automatisch</span></div>
+      <div class="spec-row"><span class="k">CMEK</span><span class="v">optional</span></div>
+      <div class="spec-row"><span class="k">Backups</span><span class="v ok">verschlüsselt</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- DETAIL C: Identität & Zugriff -->
+<section class="section"><div class="wrap">
+  <div class="det">
+    <div class="det-text">
+      <span class="eyebrow"><span class="dot"></span>Identität &amp; Zugriff</span>
+      <h2 style="margin-top:16px">Wer darf was – bis ins <span class="serif">Detail</span>.</h2>
+      <p class="lead">Zentrale Identität über euren Identity-Provider, automatisches Provisioning und granulare Rechte. Jeder Zugriff lässt sich exakt steuern und widerrufen.</p>
+      <ul class="det-list">
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Single Sign-On via SAML 2.0 &amp; OIDC</li>
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Automatisches Provisioning &amp; Deprovisioning (SCIM 2.0)</li>
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Erzwungene MFA &amp; Session-Policies</li>
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>RBAC bis auf Space-, Agent- und Dokumentenebene</li>
+      </ul>
+    </div>
+    <div class="spec">
+      <div class="spec-h"><span class="d"></span>Zugriff &amp; Identität</div>
+      <div class="spec-row"><span class="k">SSO</span><span class="v">SAML 2.0 · OIDC</span></div>
+      <div class="spec-row"><span class="k">Provisioning</span><span class="v">SCIM 2.0</span></div>
+      <div class="spec-row"><span class="k">MFA</span><span class="v ok">erzwingbar</span></div>
+      <div class="spec-row"><span class="k">Rechte-Modell</span><span class="v">RBAC, granular</span></div>
+      <div class="spec-row"><span class="k">Session-Policies</span><span class="v ok">konfigurierbar</span></div>
+      <div class="spec-row"><span class="k">IP-Allowlisting</span><span class="v">optional</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- DETAIL D: Audit & Monitoring -->
+<section class="section"><div class="wrap">
+  <div class="det rev">
+    <div class="det-text">
+      <span class="eyebrow"><span class="dot"></span>Audit &amp; Monitoring</span>
+      <h2 style="margin-top:16px">Jede Aktion <span class="serif">nachvollziehbar</span>.</h2>
+      <p class="lead">Unveränderliche Audit-Logs erfassen, wer wann was getan hat – inklusive Modellwahl und Quellen. Exportierbar in euer SIEM, mit Alerting bei Auffälligkeiten.</p>
+      <ul class="det-list">
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Unveränderliche, manipulationssichere Logs</li>
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Export via API / Webhook in Splunk, Elastic &amp; Co.</li>
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Versionierung von Prompts, Agents und Antworten</li>
+        <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>24/7-Monitoring &amp; Anomalie-Alerting</li>
+      </ul>
+    </div>
+    <div class="spec">
+      <div class="spec-h"><span class="d"></span>Audit &amp; Betrieb</div>
+      <div class="spec-row"><span class="k">Audit-Log</span><span class="v ok">unveränderlich</span></div>
+      <div class="spec-row"><span class="k">Aufbewahrung</span><span class="v">konfigurierbar</span></div>
+      <div class="spec-row"><span class="k">SIEM-Export</span><span class="v">API · Webhook</span></div>
+      <div class="spec-row"><span class="k">Monitoring</span><span class="v ok">24/7</span></div>
+      <div class="spec-row"><span class="k">Status-Page</span><span class="v">öffentlich</span></div>
+      <div class="spec-row"><span class="k">RPO / RTO</span><span class="v">&lt; 1 h / &lt; 4 h</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- DARK CONTROLS MATRIX -->
+<section><div class="dark"><div class="wrap">
+  <div class="sec-center">
+    <span class="eyebrow"><span class="dot"></span>Kontrollen im Detail</span>
+    <h2 style="margin-top:18px">Über 40 Sicherheits-<span class="serif">Kontrollen</span>.</h2>
+    <p class="lead" style="margin:14px auto 0">Organisatorisch und technisch – nach dem Stand der Technik gemäß Art. 32 DSGVO.</p>
+  </div>
+  <div class="ctrl-grid">
+    <div class="ctrl-col">
+      <h4>Infrastruktur &amp; Netzwerk</h4>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Segmentierte Netzwerke &amp; private Subnetze</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>WAF, DDoS-Schutz &amp; Rate-Limiting</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Härtung nach CIS-Benchmarks</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Secrets-Management &amp; least privilege</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Verschlüsselte Backups mit Restore-Tests</div>
+      <h4>Anwendung &amp; Entwicklung</h4>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Secure SDLC mit Code-Reviews &amp; 4-Augen-Prinzip</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>SAST, DAST &amp; Dependency-Scanning in der CI</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Prompt-Isolation &amp; Eingabe-Validierung</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Jährliche Penetrationstests durch Dritte</div>
+    </div>
+    <div class="ctrl-col">
+      <h4>Daten &amp; Datenschutz</h4>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Datenminimierung &amp; Zweckbindung</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Automatisierte Löschkonzepte &amp; Aufbewahrungsfristen</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Zero-Retention bei Modell-Providern</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Unterstützung bei Betroffenenrechten (Art. 15–22)</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Datenexport in offenen Formaten, jederzeit</div>
+      <h4>Organisation &amp; Mensch</h4>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Verpflichtung auf Vertraulichkeit (inkl. §203)</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Regelmäßige Security-Awareness-Schulungen</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Dokumentierter Incident-Response-Prozess</div>
+      <div class="ctrl"><span class="ck"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span>Benannter Datenschutzbeauftragter &amp; ISMS</div>
+    </div>
+  </div>
+</div></div></section>
+
+<!-- DATENSCHUTZ IM DETAIL -->
+<section class="section"><div class="wrap">
+  <div class="sec-center">
+    <span class="eyebrow"><span class="dot"></span>Rechtliche Grundlagen</span>
+    <h2 style="margin-top:18px">Compliance, die ein <span class="serif">Jurist</span> abnimmt.</h2>
+  </div>
+  <div class="mini3">
+    <div class="mini"><div class="mic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div><h3>DSGVO &amp; AV-Vertrag</h3><p>Auftragsverarbeitung nach Art. 28, technische und organisatorische Maßnahmen (TOMs), Unterstützung bei der Datenschutz-Folgenabschätzung und benannter EU-Vertreter.</p></div>
+    <div class="mini"><div class="mic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg></div><h3>EU AI Act</h3><p>Klassifizierung der Einsatzszenarien, Transparenz- und Dokumentationspflichten, Risikomanagement und menschliche Aufsicht – konform mit dem europäischen KI-Regelwerk.</p></div>
+    <div class="mini"><div class="mic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3v18M6 7h12M6 7l-3 6a3 3 0 0 0 6 0zM18 7l-3 6a3 3 0 0 0 6 0z"/></svg></div><h3>§203 StGB</h3><p>Für Kanzleien, Praxen und Steuerberatung: Subunternehmer sind auf das Berufsgeheimnis verpflichtet – Vertraulichkeit bleibt lückenlos gewahrt.</p></div>
+  </div>
+</div></section>
+
+<!-- FRAMEWORKS -->
+<section class="section tight"><div class="wrap">
+  <div class="sec-center">
+    <span class="eyebrow"><span class="dot"></span>Zertifizierungen &amp; Standards</span>
+    <h2 style="margin-top:18px">Geprüft nach <span class="serif">anerkannten</span> Rahmenwerken.</h2>
+  </div>
+  <div class="fw-grid">
+    <div class="fw"><div class="top"><span class="nm">ISO/IEC 27001</span><span class="st live">Zertifiziert</span></div><p>Managementsystem für Informationssicherheit – jährlich auditiert.</p></div>
+    <div class="fw"><div class="top"><span class="nm">DSGVO</span><span class="st live">Konform</span></div><p>AV-Vertrag, TOMs und Betroffenenrechte vollständig umgesetzt.</p></div>
+    <div class="fw"><div class="top"><span class="nm">EU AI Act</span><span class="st live">Konform</span></div><p>Transparenz, Risikomanagement und Dokumentation eingebaut.</p></div>
+    <div class="fw"><div class="top"><span class="nm">SOC 2 Type II</span><span class="st prog">In Vorbereitung</span></div><p>Unabhängige Prüfung der Trust-Service-Kriterien, Bericht in Arbeit.</p></div>
+    <div class="fw"><div class="top"><span class="nm">BSI C5</span><span class="st prog">Angestrebt</span></div><p>Cloud-Computing-Compliance-Kriterienkatalog des BSI.</p></div>
+    <div class="fw"><div class="top"><span class="nm">TISAX</span><span class="st prog">Optional</span></div><p>Für Automotive-Kunden auf Anfrage verfügbar.</p></div>
+  </div>
+</div></section>
+
+<!-- SUBPROCESSORS -->
+<section class="section tight"><div class="wrap">
+  <div class="sec-center">
+    <span class="eyebrow"><span class="dot"></span>Transparenz</span>
+    <h2 style="margin-top:18px">Unsere <span class="serif">Subunternehmer</span>.</h2>
+    <p class="lead" style="margin:14px auto 0">Vollständige Liste aller eingesetzten Auftragsverarbeiter – mit Zweck, Standort und Zertifizierung.</p>
+  </div>
+  <div class="cmp"><div class="cmp-scroll"><table>
+    <thead><tr><th>Anbieter</th><th>Zweck</th><th>Standort</th><th>Grundlage / Zertifizierung</th></tr></thead>
+    <tbody>
+      <tr><td>EU Cloud (Hosting)</td><td>Infrastruktur &amp; Speicherung</td><td>Frankfurt, DE</td><td><span class="tag">ISO 27001</span></td></tr>
+      <tr><td>Modell-Provider (EU-Region)</td><td>KI-Inferenz</td><td>EU</td><td><span class="tag">Zero-Retention</span></td></tr>
+      <tr><td>Objektspeicher</td><td>Dokumente &amp; Backups</td><td>EU</td><td><span class="tag">AES-256</span></td></tr>
+      <tr><td>Monitoring &amp; Logging</td><td>Betrieb &amp; Sicherheit</td><td>EU</td><td><span class="tag">AV-Vertrag</span></td></tr>
+      <tr><td>E-Mail-Versand (transaktional)</td><td>Systembenachrichtigungen</td><td>EU</td><td><span class="tag">DSGVO</span></td></tr>
+      <tr><td>Zahlungsabwicklung</td><td>Abrechnung</td><td>EU</td><td><span class="tag">PCI-DSS</span></td></tr>
+    </tbody>
+  </table></div></div>
+</div></section>
+
+<!-- INCIDENT / PENTEST / DISCLOSURE -->
+<section class="section tight"><div class="wrap">
+  <div class="mini3">
+    <div class="mini"><div class="mic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><h3>Penetrationstests</h3><p>Mindestens jährliche Tests durch unabhängige Sicherheitsfirmen, plus kontinuierliches automatisiertes Scanning. Zusammenfassungen auf Anfrage.</p></div>
+    <div class="mini"><div class="mic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.6l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3L13.7 4a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></div><h3>Incident Response</h3><p>Dokumentierter Prozess mit definierten Rollen, Eskalation und Meldepflichten nach Art. 33/34 DSGVO innerhalb von 72 Stunden.</p></div>
+    <div class="mini"><div class="mic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg></div><h3>Responsible Disclosure</h3><p>Findet ihr eine Schwachstelle? Meldet sie verantwortungsvoll an <b>security@relationflow.io</b> – wir reagieren zeitnah und transparent.</p></div>
+  </div>
+</div></section>
+
+<!-- FAQ -->
+<section class="section"><div class="wrap">
+  <div class="sec-center">
+    <span class="eyebrow"><span class="dot"></span>Häufige Fragen</span>
+    <h2 style="margin-top:18px">Was Sicherheits- und Datenschutz-Teams <span class="serif">fragen</span>.</h2>
+  </div>
+  <div class="faq-list" id="faqList">
+    <div class="faq-item"><div class="faq-q"><span class="num">01</span> Wo werden unsere Daten gespeichert und verarbeitet?<span class="pm">+</span></div><div class="faq-a"><div>Ausschließlich in EU-Rechenzentren (Primärregion Frankfurt) mit georedundantem Failover innerhalb der EU. Es findet keine Übermittlung in Drittländer statt. Optional betreiben wir relationflow in eurer eigenen Cloud oder On-Premise.</div></div></div>
+    <div class="faq-item"><div class="faq-q"><span class="num">02</span> Werden unsere Inhalte zum Training von Modellen verwendet?<span class="pm">+</span></div><div class="faq-a"><div>Nein. Eingaben, Dokumente und Ausgaben fließen niemals in das Training fremder Modelle. Wir setzen ausschließlich Modell-Provider mit vertraglich zugesicherter Zero-Retention ein.</div></div></div>
+    <div class="faq-item"><div class="faq-q"><span class="num">03</span> Stellt ihr einen Auftragsverarbeitungsvertrag (AVV) bereit?<span class="pm">+</span></div><div class="faq-a"><div>Ja. Wir stellen einen AV-Vertrag nach Art. 28 DSGVO inklusive technischer und organisatorischer Maßnahmen sowie der Subunternehmer-Liste bereit. Fordere ihn jederzeit an.</div></div></div>
+    <div class="faq-item"><div class="faq-q"><span class="num">04</span> Welche Authentifizierungs- und Zugriffsoptionen gibt es?<span class="pm">+</span></div><div class="faq-a"><div>SSO über SAML 2.0 und OIDC, automatisches Provisioning via SCIM, erzwingbare MFA sowie rollenbasierte Rechte (RBAC) bis auf Space- und Dokumentenebene.</div></div></div>
+    <div class="faq-item"><div class="faq-q"><span class="num">05</span> Können wir Audit-Logs in unser SIEM exportieren?<span class="pm">+</span></div><div class="faq-a"><div>Ja. Audit-Logs sind unveränderlich und lassen sich per API oder Webhook in gängige SIEM-Systeme (z. B. Splunk, Elastic) exportieren – inklusive Modellwahl und Quellen.</div></div></div>
+    <div class="faq-item"><div class="faq-q"><span class="num">06</span> Wie unterstützt ihr §203 StGB und Berufsgeheimnisträger?<span class="pm">+</span></div><div class="faq-a"><div>Alle eingesetzten Subunternehmer werden auf die Wahrung des Berufsgeheimnisses verpflichtet. Damit eignet sich relationflow für Kanzleien, Praxen und Steuerberatung.</div></div></div>
+    <div class="faq-item"><div class="faq-q"><span class="num">07</span> Was passiert mit unseren Daten bei Vertragsende?<span class="pm">+</span></div><div class="faq-a"><div>Ihr könnt eure Daten jederzeit in offenen Formaten exportieren. Nach Vertragsende werden sie gemäß vereinbartem Löschkonzept innerhalb definierter Fristen vollständig und nachweisbar gelöscht.</div></div></div>
+    <div class="faq-item"><div class="faq-q"><span class="num">08</span> Welche Zertifizierungen besitzt relationflow?<span class="pm">+</span></div><div class="faq-a"><div>ISO/IEC 27001 ist zertifiziert; DSGVO und EU AI Act sind vollständig umgesetzt. SOC 2 Type II befindet sich in Vorbereitung, BSI C5 wird angestrebt. Aktuelle Nachweise stellen wir auf Anfrage bereit.</div></div></div>
+  </div>
+</div></section>
+
+<!-- CTA -->
+<section><div class="cta-band"><div class="wrap">
+  <h2>Bringt eure Sicherheits-<span class="serif">prüfung</span> hinter euch.</h2>
+  <p>Fordert den AV-Vertrag, das Security-Whitepaper und die Subunternehmer-Liste an – oder sprecht direkt mit unserem Security-Team.</p>
+  <div class="cta-cta">
+    <a href="#" class="btn btn-light">AV-Vertrag anfordern</a>
+    <a href="#" class="btn btn-outline-light">Security-Team kontaktieren</a>
+  </div>
+</div></div></section>
+
+<!-- FOOTER -->
+<footer class="footer wrap">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <a href="relationflow_website.html" class="brand">relationflow<span class="io">.io</span></a>
+      <p>Die DSGVO-konforme Multi-Modell-KI-Plattform für den deutschen Mittelstand.</p>
+    </div>
+    <div class="foot-col"><h4>Produkt</h4><a href="relationflow_website.html">Plattform</a><a href="relationflow_preise.html">Preise</a><a href="relationflow_website.html">BYOM</a></div>
+    <div class="foot-col"><h4>Sicherheit</h4><a href="relationflow_sicherheit.html">Übersicht</a><a href="#">AV-Vertrag</a><a href="#">Subunternehmer</a><a href="#">Whitepaper</a></div>
+    <div class="foot-col"><h4>Kontakt</h4><a href="mailto:security@relationflow.io">security@relationflow.io</a><a href="mailto:support@relationflow.io">support@relationflow.io</a></div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 relationflow.io · Alle Rechte vorbehalten</span>
+    <div class="foot-badges"><span>DSGVO</span><span>EU-Hosting</span><span>ISO 27001</span><span>Verschlüsselung</span></div>
+  </div>
+</footer>
+
+<script>
+const burger=document.getElementById('burger'),mm=document.getElementById('mobileMenu');
+burger.addEventListener('click',()=>mm.classList.toggle('open'));
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mm.classList.remove('open')));
+document.querySelectorAll('#faqList .faq-item').forEach(it=>{
+  it.querySelector('.faq-q').addEventListener('click',()=>{
+    const open=it.classList.contains('open');
+    document.querySelectorAll('#faqList .faq-item').forEach(x=>{x.classList.remove('open');x.querySelector('.faq-a').style.maxHeight=null});
+    if(!open){it.classList.add('open');const a=it.querySelector('.faq-a');a.style.maxHeight=a.scrollHeight+'px';}
+  });
+});
+addEventListener('scroll',()=>{document.querySelector('.nav-shell').style.padding=scrollY>20?'10px 24px':'18px 24px'});
+</script>
+</body>
+</html>

@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>relationflow.io — Eine Plattform. Alle Modelle. Volle Kontrolle.</title>
+<meta name="description" content="DSGVO-konforme, multi-Modell KI-Plattform für den deutschen Mittelstand. EU-Hosting, kein Training mit Kundendaten, Bring Your Own Model.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --indigo:#4F46E5;
+  --indigo-dark:#4338CA;
+  --indigo-soft:#EEF0FE;
+  --slate:#1E293B;
+  --slate-2:#334155;
+  --muted:#64748B;
+  --muted-2:#94A3B8;
+  --bg:#FAFAF9;
+  --white:#FFFFFF;
+  --line:#E7E5E4;
+  --line-2:#D6D3D1;
+  --shadow-sm:0 1px 2px rgba(30,41,59,.06);
+  --shadow-md:0 8px 30px rgba(30,41,59,.08);
+  --shadow-lg:0 24px 60px rgba(30,41,59,.12);
+  --radius:16px;
+  --radius-sm:10px;
+  --maxw:1200px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg);
+  color:var(--slate);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.serif{font-family:'Fraunces',Georgia,serif;font-weight:500;letter-spacing:-.01em}
+.eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--indigo);display:inline-flex;align-items:center;gap:8px;
+}
+.eyebrow::before{content:"";width:24px;height:1px;background:var(--indigo);display:inline-block}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:600;font-size:15px;border-radius:10px;cursor:pointer;
+  padding:13px 22px;min-height:48px;border:1px solid transparent;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease;
+  white-space:nowrap;
+}
+.btn-primary{background:var(--indigo);color:#fff;box-shadow:0 6px 16px rgba(79,70,229,.28)}
+.btn-primary:hover{background:var(--indigo-dark);transform:translateY(-2px);box-shadow:0 10px 26px rgba(79,70,229,.34)}
+.btn-ghost{background:transparent;color:var(--slate);border-color:var(--line-2)}
+.btn-ghost:hover{background:var(--white);border-color:var(--slate);transform:translateY(-2px)}
+.btn-light{background:var(--white);color:var(--slate);border-color:var(--line)}
+.btn-light:hover{border-color:var(--slate);transform:translateY(-2px)}
+
+/* ===== HEADER ===== */
+header{position:sticky;top:0;z-index:100;background:rgba(250,250,249,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:-.02em}
+.logo .mark{width:30px;height:30px;border-radius:8px;background:var(--indigo);display:grid;place-items:center;box-shadow:0 4px 12px rgba(79,70,229,.3)}
+.logo .mark svg{width:18px;height:18px}
+.logo span b{color:var(--indigo)}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-item{position:relative}
+.nav-trigger{display:flex;align-items:center;gap:5px;padding:9px 14px;border-radius:8px;font-size:15px;font-weight:500;color:var(--slate-2);cursor:pointer;transition:background .15s,color .15s}
+.nav-trigger:hover{background:var(--indigo-soft);color:var(--indigo)}
+.nav-trigger svg{width:13px;height:13px;transition:transform .2s;opacity:.6}
+.nav-item:hover .nav-trigger svg{transform:rotate(180deg)}
+.dropdown{
+  position:absolute;top:calc(100% + 10px);left:0;
+  background:var(--white);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow-lg);padding:10px;min-width:260px;
+  opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity .2s ease,transform .2s ease,visibility .2s;
+}
+.nav-item:hover .dropdown,.nav-item.open .dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+.dropdown a{display:flex;flex-direction:column;padding:10px 12px;border-radius:9px;transition:background .15s}
+.dropdown a:hover{background:var(--bg)}
+.dropdown a strong{font-size:14px;font-weight:600;color:var(--slate)}
+.dropdown a small{font-size:12.5px;color:var(--muted);font-weight:400}
+.mega{min-width:720px;padding:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px 28px}
+.mega-col h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);margin:4px 0 8px 12px;font-weight:700}
+.mega a{padding:8px 12px}
+.mega a strong{font-size:13.5px}
+.nav-cta{display:flex;align-items:center;gap:10px}
+.nav-cta .login{font-size:15px;font-weight:500;color:var(--slate-2);padding:9px 14px;border-radius:8px}
+.nav-cta .login:hover{color:var(--indigo)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:12px;min-width:48px;min-height:48px;align-items:center;justify-content:center}
+.hamburger span{width:22px;height:2px;background:var(--slate);border-radius:2px;transition:.25s}
+.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ===== HERO ===== */
+.hero{padding:84px 0 64px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:0.92fr 1.08fr;gap:64px;align-items:center}
+.hero-left{max-width:520px}
+.hero h1{font-size:clamp(40px,5.2vw,68px);line-height:1.02;letter-spacing:-.02em;color:var(--slate);margin:22px 0 0}
+.hero h1 .em{font-style:italic;color:var(--indigo);font-weight:400}
+.hero-sub{font-size:18px;color:var(--muted);margin:26px 0 32px;max-width:460px;line-height:1.65}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero-logos{margin-top:46px;padding-top:30px;border-top:1px solid var(--line)}
+.hero-logos p{font-size:12.5px;color:var(--muted-2);font-weight:500;letter-spacing:.02em;margin-bottom:16px}
+.logo-row{display:flex;align-items:center;gap:26px;flex-wrap:wrap;opacity:.78}
+.logo-row .clogo{font-weight:700;font-size:15px;color:var(--slate-2);letter-spacing:-.02em;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.logo-row .clogo svg{width:18px;height:18px;opacity:.85}
+
+/* Bento */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(94px,auto);gap:14px}
+.cell{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-sm);transition:transform .25s,box-shadow .25s}
+.cell:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.cell-models{grid-column:span 4;grid-row:span 2;display:flex;flex-direction:column}
+.cell-stat{grid-column:span 2;grid-row:span 1;display:flex;flex-direction:column;justify-content:center}
+.cell-eu{grid-column:span 2;grid-row:span 1;display:flex;flex-direction:column;justify-content:center}
+.cell-chat{grid-column:span 6;grid-row:span 2;display:flex;flex-direction:column}
+.cell h5{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);font-weight:700;margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}
+.chip{display:flex;align-items:center;gap:7px;background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:7px 12px;font-size:12.5px;font-weight:600;color:var(--slate-2)}
+.chip .dot{width:8px;height:8px;border-radius:50%}
+.cell-stat .big{font-family:'Fraunces',serif;font-size:40px;line-height:1;color:var(--indigo);font-weight:600;letter-spacing:-.02em}
+.cell-stat .lbl{font-size:12.5px;color:var(--muted);margin-top:6px;font-weight:500}
+.cell-eu .euflag{width:34px;height:34px;border-radius:8px;background:#0a3d91;display:grid;place-items:center;margin-bottom:8px}
+.cell-eu .euflag svg{width:22px;height:22px}
+.cell-eu .lbl{font-size:13px;font-weight:600;color:var(--slate)}
+.cell-eu small{font-size:11.5px;color:var(--muted)}
+.chat-line{display:flex;gap:10px;margin-bottom:10px}
+.chat-line .av{width:26px;height:26px;border-radius:7px;flex-shrink:0;display:grid;place-items:center;font-size:11px;font-weight:700;color:#fff}
+.chat-line.user .av{background:var(--slate)}
+.chat-line.ai .av{background:var(--indigo)}
+.chat-bubble{font-size:12.5px;color:var(--slate-2);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 11px;line-height:1.45}
+.chat-line.ai .chat-bubble{background:var(--indigo-soft);border-color:#dfe1fb}
+.chat-meta{margin-top:auto;padding-top:10px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);font-size:11px;color:var(--muted-2)}
+.chat-meta .badge{display:flex;align-items:center;gap:5px;font-weight:600;color:var(--indigo)}
+
+/* ===== SECTION BASE ===== */
+section{position:relative}
+.sec{padding:88px 0}
+.sec-head{max-width:640px;margin-bottom:48px}
+.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.sec-head h2{font-size:clamp(30px,3.6vw,46px);line-height:1.08;letter-spacing:-.02em;color:var(--slate);margin:16px 0 0}
+.sec-head p{font-size:17px;color:var(--muted);margin-top:16px}
+
+/* FEATURES */
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.feat{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:30px;display:flex;gap:20px;transition:transform .25s,box-shadow .25s,border-color .25s}
+.feat:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--line-2)}
+.feat-ico{width:52px;height:52px;border-radius:13px;background:var(--indigo-soft);display:grid;place-items:center;flex-shrink:0}
+.feat-ico svg{width:26px;height:26px;stroke:var(--indigo)}
+.feat h3{font-size:19px;font-weight:600;letter-spacing:-.01em;margin-bottom:8px;display:flex;align-items:center;gap:9px}
+.tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--indigo);background:var(--indigo-soft);padding:3px 8px;border-radius:5px}
+.feat p{font-size:14.5px;color:var(--muted);margin-bottom:14px;line-height:1.6}
+.link{font-size:14px;font-weight:600;color:var(--indigo);display:inline-flex;align-items:center;gap:6px;transition:gap .2s}
+.link:hover{gap:10px}
+.link svg{width:15px;height:15px}
+
+/* SECURITY */
+.sec-trust{background:var(--slate);color:#fff}
+.sec-trust .eyebrow{color:#A5B4FC}
+.sec-trust .eyebrow::before{background:#A5B4FC}
+.sec-trust .sec-head h2{color:#fff}
+.sec-trust .sec-head p{color:#94A3B8}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.tcard{background:#273449;border:1px solid #3a4a63;border-radius:var(--radius);padding:28px;transition:transform .25s,background .25s}
+.tcard:hover{transform:translateY(-4px);background:#2c3a52}
+.tcard-ico{width:50px;height:50px;border-radius:12px;background:rgba(99,102,241,.18);display:grid;place-items:center;margin-bottom:20px}
+.tcard-ico svg{width:26px;height:26px;stroke:#A5B4FC}
+.tcard h3{font-size:17px;font-weight:600;margin-bottom:9px}
+.tcard p{font-size:13.5px;color:#94A3B8;line-height:1.6;margin-bottom:16px}
+.tcard .link{color:#A5B4FC}
+.trust-note{margin-top:34px;text-align:center;font-size:14px;color:#94A3B8;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.trust-note b{color:#fff}
+
+/* PRICING */
+.toggle-wrap{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:44px}
+.toggle-wrap span{font-size:15px;font-weight:600;color:var(--muted);transition:color .2s}
+.toggle-wrap span.active{color:var(--slate)}
+.switch{position:relative;width:54px;height:30px;background:var(--indigo);border-radius:99px;cursor:pointer;border:none;transition:background .2s}
+.switch .knob{position:absolute;top:3px;left:3px;width:24px;height:24px;background:#fff;border-radius:50%;transition:transform .25s;box-shadow:0 2px 5px rgba(0,0,0,.2)}
+.switch.yearly .knob{transform:translateX(24px)}
+.save-pill{font-size:11.5px;font-weight:700;color:var(--indigo);background:var(--indigo-soft);padding:4px 9px;border-radius:99px}
+.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:stretch}
+.pcard{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;position:relative}
+.pcard:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
+.pcard.featured{border:1.5px solid var(--indigo);box-shadow:var(--shadow-lg)}
+.pcard.featured::before{content:"Beliebteste Wahl";position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--indigo);color:#fff;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:5px 14px;border-radius:99px;white-space:nowrap}
+.pcard h3{font-size:17px;font-weight:600;color:var(--slate)}
+.pcard .ptag{font-size:13px;color:var(--muted);margin:6px 0 18px;min-height:38px}
+.price{display:flex;align-items:baseline;gap:4px;margin-bottom:4px}
+.price .amt{font-family:'Fraunces',serif;font-size:42px;font-weight:600;color:var(--slate);letter-spacing:-.02em}
+.price .per{font-size:14px;color:var(--muted);font-weight:500}
+.price-note{font-size:12px;color:var(--muted-2);min-height:18px;margin-bottom:22px}
+.pcard .btn{width:100%}
+.plist{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:12px}
+.plist li{display:flex;gap:10px;font-size:13.5px;color:var(--slate-2);align-items:flex-start}
+.plist li svg{width:17px;height:17px;flex-shrink:0;margin-top:2px;stroke:var(--indigo)}
+
+/* TESTIMONIALS */
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tcell{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s}
+.tcell:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.tcell .clogo{font-weight:700;font-size:16px;color:var(--slate);letter-spacing:-.02em;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.tcell .clogo .sq{width:24px;height:24px;border-radius:6px;background:var(--indigo);display:grid;place-items:center;color:#fff;font-size:12px}
+.tcell blockquote{font-size:15.5px;color:var(--slate-2);line-height:1.6;font-family:'Fraunces',serif;font-weight:400;margin-bottom:22px}
+.results{display:flex;gap:8px;margin-bottom:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0}
+.results .r{flex:1;text-align:center}
+.results .r .n{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--indigo);letter-spacing:-.01em}
+.results .r .l{font-size:11px;color:var(--muted);line-height:1.3;margin-top:2px}
+.tcell .person{display:flex;align-items:center;gap:12px;margin-top:auto}
+.tcell .person .av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),#7C3AED);display:grid;place-items:center;color:#fff;font-weight:600;font-size:15px}
+.tcell .person .nm{font-size:14px;font-weight:600;color:var(--slate)}
+.tcell .person .tt{font-size:12.5px;color:var(--muted)}
+
+/* FINAL CTA */
+.final{padding:96px 0}
+.final-box{background:var(--slate);border-radius:28px;padding:72px 48px;text-align:center;position:relative;overflow:hidden}
+.final-box::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(79,70,229,.4),transparent 60%);opacity:.7}
+.final-box>*{position:relative}
+.final-box .eyebrow{color:#A5B4FC}
+.final-box .eyebrow::before{background:#A5B4FC}
+.final-box h2{font-size:clamp(30px,4vw,48px);line-height:1.08;color:#fff;letter-spacing:-.02em;margin:18px auto 0;max-width:680px}
+.final-box p{font-size:18px;color:#94A3B8;margin:18px auto 32px;max-width:520px}
+.final-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.final-box .btn-ghost{color:#fff;border-color:rgba(255,255,255,.25)}
+.final-box .btn-ghost:hover{background:rgba(255,255,255,.08);border-color:#fff}
+.final-trust{margin-top:28px;font-size:13px;color:#64748B}
+
+/* FOOTER */
+footer{background:var(--white);border-top:1px solid var(--line);padding:64px 0 32px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.4fr;gap:40px;margin-bottom:48px}
+.foot-brand .logo{margin-bottom:16px}
+.foot-brand p{font-size:14px;color:var(--muted);max-width:300px;line-height:1.6}
+.foot-col h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:700;margin-bottom:18px}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.foot-col a{font-size:14px;color:var(--muted);transition:color .15s}
+.foot-col a:hover{color:var(--indigo)}
+.news p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.news-form{display:flex;gap:8px;margin-bottom:20px}
+.news-form input{flex:1;padding:11px 14px;border:1px solid var(--line-2);border-radius:9px;font-size:14px;font-family:inherit;min-height:46px}
+.news-form input:focus{outline:2px solid var(--indigo);border-color:var(--indigo)}
+.news-form button{min-height:46px;padding:11px 16px}
+.social{display:flex;gap:10px}
+.social a{width:40px;height:40px;border-radius:9px;border:1px solid var(--line);display:grid;place-items:center;transition:.18s}
+.social a:hover{border-color:var(--indigo);background:var(--indigo-soft)}
+.social a svg{width:18px;height:18px;fill:var(--slate-2)}
+.lang{margin-top:16px;display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.lang button{padding:7px 13px;font-size:13px;font-weight:600;background:none;border:none;cursor:pointer;color:var(--muted);font-family:inherit}
+.lang button.active{background:var(--indigo);color:#fff}
+.foot-bottom{border-top:1px solid var(--line);padding-top:28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.foot-bottom .copy{font-size:13px;color:var(--muted)}
+.badges{display:flex;gap:10px;flex-wrap:wrap}
+.badge-pill{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--slate-2);background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:7px 13px}
+.badge-pill svg{width:14px;height:14px;stroke:var(--indigo)}
+
+/* SCROLL FADE */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fade-up.in{opacity:1;transform:translateY(0)}
+
+/* MOBILE */
+.mobile-menu{display:none}
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:48px}
+  .hero-left{max-width:100%}
+  .feat-grid,.trust-grid,.price-grid,.test-grid{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:32px}
+}
+@media(max-width:768px){
+  .nav-links,.nav-cta>.login{display:none}
+  .nav-cta .btn{display:none}
+  .hamburger{display:flex}
+  .sec{padding:64px 0}
+  .feat-grid,.trust-grid,.price-grid,.test-grid{grid-template-columns:1fr}
+  .feat{flex-direction:column;gap:16px}
+  .final-box{padding:52px 24px}
+  .foot-grid{grid-template-columns:1fr}
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .cell-models{grid-column:span 2;grid-row:auto}
+  .cell-stat,.cell-eu{grid-column:span 1}
+  .cell-chat{grid-column:span 2}
+  .mobile-menu{
+    display:block;position:fixed;top:70px;left:0;right:0;bottom:0;
+    background:var(--bg);z-index:99;overflow-y:auto;padding:20px 24px 40px;
+    transform:translateX(100%);transition:transform .3s ease;
+  }
+  .mobile-menu.open{transform:translateX(0)}
+  .m-group{border-bottom:1px solid var(--line)}
+  .m-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;padding:16px 4px;font-size:16px;font-weight:600;background:none;border:none;cursor:pointer;color:var(--slate);font-family:inherit;min-height:48px}
+  .m-trigger svg{width:16px;height:16px;transition:transform .2s;opacity:.6}
+  .m-group.open .m-trigger svg{transform:rotate(180deg)}
+  .m-sub{max-height:0;overflow:hidden;transition:max-height .3s ease}
+  .m-group.open .m-sub{max-height:900px}
+  .m-sub a{display:block;padding:11px 12px;font-size:14.5px;color:var(--muted);min-height:44px}
+  .m-sub h5{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted-2);margin:14px 12px 4px;font-weight:700}
+  .m-cta{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+  .m-cta .btn{width:100%}
+}
+@media(max-width:480px){
+  .results{flex-direction:column;gap:14px}
+  .results .r{display:flex;align-items:baseline;gap:8px;text-align:left;justify-content:flex-start}
+  .news-form{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo" aria-label="relationflow.io Startseite">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="14.5" r="3" fill="#fff"/></svg></span>
+      <span>relation<b>flow</b></span>
+    </a>
+
+    <nav aria-label="Hauptnavigation">
+      <ul class="nav-links">
+        <li class="nav-item">
+          <div class="nav-trigger" role="button" tabindex="0" aria-haspopup="true">Plattform <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+          <div class="dropdown mega" role="menu">
+            <div class="mega-col">
+              <h4>Features</h4>
+              <a href="#"><strong>Multi-Modell Access</strong><small>GPT, Claude, Gemini & mehr</small></a>
+              <a href="#"><strong>Intelligente Agents</strong><small>Automatisierte Workflows</small></a>
+              <a href="#"><strong>Spaces & Collaboration</strong><small>Teams sicher vernetzen</small></a>
+              <a href="#"><strong>Enterprise Chat</strong><small>KI für jeden Mitarbeiter</small></a>
+              <a href="#"><strong>Wissensdatenbank (RAG)</strong><small>Eigene Daten anbinden</small></a>
+              <a href="#"><strong>Bring Your Own Model</strong><small>Eigene Modelle einbinden</small></a>
+              <a href="#"><strong>Versionierung & Audit</strong><small>Lückenlose Nachverfolgung</small></a>
+            </div>
+            <div class="mega-col">
+              <h4>Anwendungsfälle</h4>
+              <a href="#"><strong>Vertrieb & Sales</strong></a>
+              <a href="#"><strong>Marketing & Content</strong></a>
+              <a href="#"><strong>Customer Support</strong></a>
+              <a href="#"><strong>Operations & Automation</strong></a>
+              <a href="#"><strong>Softwareentwicklung</strong></a>
+              <a href="#"><strong>Finanzwesen & Compliance</strong></a>
+              <a href="#"><strong>HR & Recruiting</strong></a>
+            </div>
+            <div class="mega-col">
+              <h4>Lösungen nach Branche</h4>
+              <a href="#"><strong>Allgemeine KMU</strong></a>
+              <a href="#"><strong>Rechtsanwälte & Juristen</strong></a>
+              <a href="#"><strong>Medizin & Gesundheit</strong></a>
+              <a href="#"><strong>Finanzsektor & Banking</strong></a>
+              <a href="#"><strong>Öffentliche Verwaltung</strong></a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div class="nav-trigger" role="button" tabindex="0" aria-haspopup="true">Sicherheit <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+          <div class="dropdown" role="menu">
+            <a href="#"><strong>DSGVO-Konformität</strong><small>100% rechtssicher</small></a>
+            <a href="#"><strong>EU-Hosting Details</strong><small>Rechenzentren in Deutschland</small></a>
+            <a href="#"><strong>Verschlüsselung & Datenschutz</strong><small>Ende-zu-Ende</small></a>
+            <a href="#"><strong>Enterprise Security</strong><small>SSO, RBAC, SCIM</small></a>
+            <a href="#"><strong>Zertifikate & Standards</strong><small>ISO 27001, SOC 2</small></a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div class="nav-trigger" role="button" tabindex="0" aria-haspopup="true">Ressourcen <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+          <div class="dropdown" role="menu">
+            <a href="#"><strong>Blog & Insights</strong></a>
+            <a href="#"><strong>Dokumentation & API-Docs</strong></a>
+            <a href="#"><strong>Help Center</strong></a>
+            <a href="#"><strong>Case Studies</strong></a>
+            <a href="#"><strong>Video Tutorials</strong></a>
+            <a href="#"><strong>Webinare & Events</strong></a>
+          </div>
+        </li>
+        <li class="nav-item"><a href="#pricing" class="nav-trigger">Preise</a></li>
+        <li class="nav-item">
+          <div class="nav-trigger" role="button" tabindex="0" aria-haspopup="true">Enterprise <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+          <div class="dropdown" role="menu">
+            <a href="#"><strong>Custom Solutions</strong><small>Maßgeschneidert für Sie</small></a>
+            <a href="#"><strong>Dedicated Support</strong><small>Persönlicher Ansprechpartner</small></a>
+            <a href="#"><strong>Sales kontaktieren</strong><small>Demo & Beratung anfragen</small></a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="nav-cta">
+      <a href="#" class="login">Login</a>
+      <a href="#" class="btn btn-primary">Kostenlos starten</a>
+      <button class="hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== MOBILE MENU ===== -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="m-group">
+    <button class="m-trigger">Plattform <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+    <div class="m-sub">
+      <h5>Features</h5>
+      <a href="relationflow_feature_multimodell.html">Multi-Modell Access</a><a href="relationflow_feature_agents.html">Intelligente Agents</a><a href="#">Spaces & Collaboration</a><a href="relationflow_feature_chat.html">Enterprise Chat</a><a href="relationflow_feature_rag.html">Wissensdatenbank (RAG)</a><a href="#">Bring Your Own Model</a><a href="#">Versionierung & Audit</a>
+      <h5>Anwendungsfälle</h5>
+      <a href="#">Vertrieb & Sales</a><a href="#">Marketing & Content</a><a href="#">Customer Support</a><a href="#">Operations & Automation</a><a href="#">Softwareentwicklung</a><a href="#">Finanzwesen & Compliance</a><a href="#">HR & Recruiting</a>
+      <h5>Branche</h5>
+      <a href="#">Allgemeine KMU</a><a href="#">Rechtsanwälte & Juristen</a><a href="#">Medizin & Gesundheit</a><a href="#">Finanzsektor & Banking</a><a href="#">Öffentliche Verwaltung</a>
+    </div>
+  </div>
+  <div class="m-group">
+    <button class="m-trigger">Sicherheit & Compliance <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+    <div class="m-sub">
+      <a href="#">DSGVO-Konformität</a><a href="#">EU-Hosting Details</a><a href="#">Verschlüsselung & Datenschutz</a><a href="#">Enterprise Security (SSO, RBAC)</a><a href="#">Zertifikate & Standards</a>
+    </div>
+  </div>
+  <div class="m-group">
+    <button class="m-trigger">Ressourcen <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+    <div class="m-sub">
+      <a href="#">Blog & Insights</a><a href="#">Dokumentation & API-Docs</a><a href="#">Help Center</a><a href="#">Case Studies</a><a href="#">Video Tutorials</a><a href="#">Webinare & Events</a>
+    </div>
+  </div>
+  <div class="m-group">
+    <a href="#pricing" class="m-trigger" style="text-decoration:none">Preise</a>
+  </div>
+  <div class="m-group">
+    <button class="m-trigger">Enterprise <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+    <div class="m-sub">
+      <a href="#">Custom Solutions</a><a href="#">Dedicated Support</a><a href="#">Sales kontaktieren</a>
+    </div>
+  </div>
+  <div class="m-cta">
+    <a href="#" class="btn btn-light">Login</a>
+    <a href="#" class="btn btn-primary">Kostenlos starten</a>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-left fade-up">
+      <span class="eyebrow">DSGVO-konforme KI-Plattform</span>
+      <h1 class="serif">Eine Plattform. Alle Modelle. <span class="em">Volle Kontrolle.</span></h1>
+      <p class="hero-sub">Die multi-Modell KI-Plattform für den deutschen Mittelstand. Gehostet in der EU, niemals trainiert mit Ihren Daten — und offen für Ihre eigenen Modelle.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn btn-primary">Kostenlos starten</a>
+        <a href="#" class="btn btn-ghost">Demo buchen</a>
+      </div>
+      <div class="hero-logos">
+        <p>Vertraut von über 2.400 Unternehmen im DACH-Raum</p>
+        <div class="logo-row">
+          <span class="clogo"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" fill="#1E293B"/></svg>Nordmann AG</span>
+          <span class="clogo"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#4F46E5"/></svg>Hanseatic</span>
+          <span class="clogo"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l9 16H3z" fill="#1E293B"/></svg>Bergmann</span>
+          <span class="clogo"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="8" fill="#334155"/></svg>Vela Med</span>
+          <span class="clogo"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M12 4v16" stroke="#4F46E5" stroke-width="3"/></svg>Kreuz & Co.</span>
+          <span class="clogo"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="8" rx="4" fill="#1E293B"/></svg>Lumen GmbH</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right fade-up">
+      <div class="bento">
+        <div class="cell cell-models">
+          <h5>Verfügbare Modelle</h5>
+          <div class="chips">
+            <span class="chip"><span class="dot" style="background:#10A37F"></span>GPT-4o</span>
+            <span class="chip"><span class="dot" style="background:#D97757"></span>Claude Opus</span>
+            <span class="chip"><span class="dot" style="background:#4285F4"></span>Gemini 1.5</span>
+            <span class="chip"><span class="dot" style="background:#7C3AED"></span>Mistral Large</span>
+            <span class="chip"><span class="dot" style="background:#1E293B"></span>Llama 3</span>
+            <span class="chip"><span class="dot" style="background:#4F46E5"></span>Ihr Modell</span>
+          </div>
+          <p style="font-size:12.5px;color:var(--muted);margin-top:14px;line-height:1.5">Wechseln Sie nahtlos zwischen Anbietern — ohne Datenleck, ohne Lock-in.</p>
+        </div>
+        <div class="cell cell-stat">
+          <div class="big">0%</div>
+          <div class="lbl">Training mit Ihren Daten</div>
+        </div>
+        <div class="cell cell-eu">
+          <div class="euflag"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="1" fill="#FFD700"/><circle cx="16" cy="6.5" r="1" fill="#FFD700"/><circle cx="18.5" cy="10" r="1" fill="#FFD700"/><circle cx="18.5" cy="14" r="1" fill="#FFD700"/><circle cx="16" cy="17.5" r="1" fill="#FFD700"/><circle cx="12" cy="19" r="1" fill="#FFD700"/><circle cx="8" cy="17.5" r="1" fill="#FFD700"/><circle cx="5.5" cy="14" r="1" fill="#FFD700"/><circle cx="5.5" cy="10" r="1" fill="#FFD700"/><circle cx="8" cy="6.5" r="1" fill="#FFD700"/></svg></div>
+          <div class="lbl">EU-Hosting</div>
+          <small>Frankfurt & Berlin</small>
+        </div>
+        <div class="cell cell-chat">
+          <h5>Live-Vorschau</h5>
+          <div class="chat-line user"><span class="av">JM</span><span class="chat-bubble">Fasse den Q3-Vertragsentwurf zusammen und prüfe DSGVO-relevante Klauseln.</span></div>
+          <div class="chat-line ai"><span class="av">RF</span><span class="chat-bubble">Der Entwurf enthält 3 Klauseln zur Datenverarbeitung. Klausel 4.2 sollte um eine Löschfrist ergänzt werden …</span></div>
+          <div class="chat-meta"><span>verarbeitet in EU · verschlüsselt</span><span class="badge"><svg viewBox="0 0 24 24" width="12" height="12" fill="none"><path d="M5 13l4 4L19 7" stroke="#4F46E5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>auditiert</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <span class="eyebrow">Funktionen</span>
+      <h2 class="serif">Alles, was moderne Teams für sichere KI brauchen.</h2>
+      <p>Eine kuratierte Plattform statt fragmentierter Einzeltools — durchdacht für deutsche Unternehmen, die Tempo und Compliance gleichzeitig wollen.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat fade-up">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><path d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z" stroke-linejoin="round"/></svg></div>
+        <div>
+          <h3>Intelligente Multi-Modell-Auswahl</h3>
+          <p>Das System wählt automatisch das beste Modell für jede Aufgabe — oder Sie bestimmen es selbst, ganz ohne Anbieter-Lock-in.</p>
+          <a href="#" class="link">Mehr erfahren <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="feat fade-up">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3.5 19c.5-3 2.8-4.5 5.5-4.5S14 16 14.5 19M16 13.5c2 .3 3.6 1.6 4 3.5" stroke-linecap="round"/></svg></div>
+        <div>
+          <h3>Sichere Teams & Collaboration</h3>
+          <p>Spaces, geteilte Prompts und rollenbasierte Zugriffe lassen ganze Abteilungen sicher zusammenarbeiten — DSGVO-konform by Design.</p>
+          <a href="#" class="link">Mehr erfahren <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="feat fade-up">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><path d="M4 7l8-4 8 4v10l-8 4-8-4z" stroke-linejoin="round"/><path d="M4 7l8 4 8-4M12 11v10" stroke-linejoin="round"/></svg></div>
+        <div>
+          <h3>Bring Your Own Model <span class="tag">Differentiator</span></h3>
+          <p>Binden Sie Ihre eigenen, lokal gehosteten oder feinjustierten Modelle ein — volle Souveränität über Ihre KI-Infrastruktur.</p>
+          <a href="#" class="link">Mehr erfahren <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="feat fade-up">
+        <div class="feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.9"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div>
+          <h3>Versionierung & Audit Trail <span class="tag">Compliance</span></h3>
+          <p>Jede Konversation, jeder Prompt und jede Modellantwort wird lückenlos protokolliert — revisionssicher für Wirtschaftsprüfer und Aufsicht.</p>
+          <a href="#" class="link">Mehr erfahren <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECURITY / TRUST ===== -->
+<section class="sec sec-trust">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <span class="eyebrow">Sicherheit & Vertrauen</span>
+      <h2 class="serif">Entwickelt für deutsche Compliance.</h2>
+      <p>Datenschutz ist bei uns kein Add-on, sondern das Fundament. Vom Hosting bis zur Verschlüsselung — alles auf europäischem Recht aufgebaut.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="tcard fade-up">
+        <div class="tcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 3l7 3v5c0 4.5-3 8-7 9.5C8 19 5 15.5 5 11V6z" stroke-linejoin="round"/><path d="M9 12l2 2 4-4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>DSGVO-Konformität</h3>
+        <p>Vollständig konform mit der EU-Datenschutz-Grundverordnung. Auftragsverarbeitungsvertrag inklusive.</p>
+        <a href="#" class="link">Zum Security-Hub <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="tcard fade-up">
+        <div class="tcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/></svg></div>
+        <h3>EU-Hosting</h3>
+        <p>Ihre Daten verlassen nie die EU. Rechenzentren in Frankfurt und Berlin, betrieben nach deutschem Recht.</p>
+        <a href="#" class="link">Zum Security-Hub <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="tcard fade-up">
+        <div class="tcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M5 11V8a7 7 0 0114 0v3" stroke-linecap="round"/><path d="M4 11h16v9a1 1 0 01-1 1H5a1 1 0 01-1-1z"/><path d="M12 15v2.5" stroke-linecap="round"/></svg></div>
+        <h3>Kein Training mit Kundendaten</h3>
+        <p>Garantiert: Ihre Eingaben werden niemals zum Training von Modellen genutzt — vertraglich zugesichert.</p>
+        <a href="#" class="link">Zum Security-Hub <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="tcard fade-up">
+        <div class="tcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3" stroke-linecap="round"/><circle cx="12" cy="15.5" r="1.6" fill="currentColor" stroke="none"/></svg></div>
+        <h3>Verschlüsselung</h3>
+        <p>Ende-zu-Ende-Verschlüsselung im Transit und at Rest nach AES-256 — kombiniert mit ISO 27001 & SOC 2.</p>
+        <a href="#" class="link">Zum Security-Hub <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+    <div class="trust-note fade-up"><svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8-7 9.5C8 19 5 15.5 5 11V6z" stroke="#A5B4FC" stroke-width="1.8" stroke-linejoin="round"/></svg> Zertifiziert nach <b>ISO 27001</b>, <b>SOC 2 Type II</b> und <b>BSI C5</b> — geprüft von unabhängigen Auditoren.</div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section class="sec" id="pricing">
+  <div class="wrap">
+    <div class="sec-head center fade-up">
+      <span class="eyebrow" style="justify-content:center">Preise</span>
+      <h2 class="serif">Transparente Preise. Keine Überraschungen.</h2>
+      <p>Starten Sie kostenlos und skalieren Sie, wenn Ihr Team wächst. Alle Pläne inklusive EU-Hosting und DSGVO-Konformität.</p>
+    </div>
+
+    <div class="toggle-wrap fade-up">
+      <span id="lblMonth" class="active">Monatlich</span>
+      <button class="switch" id="priceSwitch" aria-label="Abrechnung umschalten"><span class="knob"></span></button>
+      <span id="lblYear">Jährlich</span>
+      <span class="save-pill">20% sparen</span>
+    </div>
+
+    <div class="price-grid">
+      <!-- FREE -->
+      <div class="pcard fade-up">
+        <h3>Free</h3>
+        <p class="ptag">Zum Ausprobieren für Einzelpersonen.</p>
+        <div class="price"><span class="amt">0&nbsp;€</span></div>
+        <div class="price-note">für immer kostenlos</div>
+        <a href="#" class="btn btn-light">Jetzt starten</a>
+        <ul class="plist">
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>1 Nutzer</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Zugang zu 3 Basismodellen</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>100 Nachrichten / Monat</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>EU-Hosting & DSGVO</li>
+        </ul>
+      </div>
+      <!-- STARTER -->
+      <div class="pcard fade-up">
+        <h3>Starter</h3>
+        <p class="ptag">Für kleine Teams mit ersten KI-Workflows.</p>
+        <div class="price"><span class="amt" data-m="19&nbsp;€" data-y="15&nbsp;€">19&nbsp;€</span><span class="per">/ Nutzer / Monat</span></div>
+        <div class="price-note" data-mnote="monatlich abgerechnet" data-ynote="jährlich abgerechnet">monatlich abgerechnet</div>
+        <a href="#" class="btn btn-light">Starter wählen</a>
+        <ul class="plist">
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Bis 5 Nutzer</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Alle Standardmodelle</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Unbegrenzte Nachrichten</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Spaces & Collaboration</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>E-Mail-Support</li>
+        </ul>
+      </div>
+      <!-- PRO -->
+      <div class="pcard featured fade-up">
+        <h3>Pro</h3>
+        <p class="ptag">Für wachsende Unternehmen mit Compliance-Bedarf.</p>
+        <div class="price"><span class="amt" data-m="49&nbsp;€" data-y="39&nbsp;€">49&nbsp;€</span><span class="per">/ Nutzer / Monat</span></div>
+        <div class="price-note" data-mnote="monatlich abgerechnet" data-ynote="jährlich abgerechnet">monatlich abgerechnet</div>
+        <a href="#" class="btn btn-primary">Pro wählen</a>
+        <ul class="plist">
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Bis 50 Nutzer</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Premium-Modelle inklusive</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Bring Your Own Model (BYOM)</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Wissensdatenbank (RAG)</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Versionierung & Audit Trail</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>SSO & RBAC</li>
+        </ul>
+      </div>
+      <!-- MAX -->
+      <div class="pcard fade-up">
+        <h3>Max</h3>
+        <p class="ptag">Für Konzerne mit höchsten Anforderungen.</p>
+        <div class="price"><span class="amt" data-m="99&nbsp;€" data-y="79&nbsp;€">99&nbsp;€</span><span class="per">/ Nutzer / Monat</span></div>
+        <div class="price-note" data-mnote="monatlich abgerechnet" data-ynote="jährlich abgerechnet">monatlich abgerechnet</div>
+        <a href="#" class="btn btn-light">Sales kontaktieren</a>
+        <ul class="plist">
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Unbegrenzte Nutzer</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Dedizierte Infrastruktur</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Eigenes On-Premise-Hosting</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>SCIM & erweitertes Audit</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Dedizierter Ansprechpartner</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>SLA 99,9% Verfügbarkeit</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head fade-up">
+      <span class="eyebrow">Kundenstimmen</span>
+      <h2 class="serif">Der Mittelstand vertraut auf relationflow.</h2>
+      <p>Von der Kanzlei bis zur Klinik — Teams in ganz Deutschland arbeiten schneller, ohne Kompromisse beim Datenschutz.</p>
+    </div>
+    <div class="test-grid">
+      <div class="tcell fade-up">
+        <div class="clogo"><span class="sq">N</span>Nordmann AG</div>
+        <blockquote>„Endlich eine KI-Plattform, die unsere Wirtschaftsprüfer ohne Diskussion abnicken. Der Audit Trail ist Gold wert."</blockquote>
+        <div class="results">
+          <div class="r"><div class="n">-62%</div><div class="l">Recherchezeit</div></div>
+          <div class="r"><div class="n">3 Tage</div><div class="l">bis Roll-out</div></div>
+          <div class="r"><div class="n">100%</div><div class="l">DSGVO-konform</div></div>
+        </div>
+        <div class="person"><span class="av">KH</span><div><div class="nm">Katrin Hofmann</div><div class="tt">Leiterin Finanzen, Nordmann AG</div></div></div>
+      </div>
+      <div class="tcell fade-up">
+        <div class="clogo"><span class="sq">V</span>Vela Med</div>
+        <blockquote>„Patientendaten dürfen die EU nicht verlassen — relationflow war die einzige Lösung, die das glaubwürdig garantiert."</blockquote>
+        <div class="results">
+          <div class="r"><div class="n">+40%</div><div class="l">Doku-Tempo</div></div>
+          <div class="r"><div class="n">0</div><div class="l">Datenlecks</div></div>
+          <div class="r"><div class="n">8 Mio.</div><div class="l">sichere Anfragen</div></div>
+        </div>
+        <div class="person"><span class="av">DR</span><div><div class="nm">Dr. Robert Engel</div><div class="tt">CMIO, Vela Med Kliniken</div></div></div>
+      </div>
+      <div class="tcell fade-up">
+        <div class="clogo"><span class="sq">K</span>Kreuz & Co.</div>
+        <blockquote>„Mit BYOM nutzen wir unser eigenes, juristisch trainiertes Modell direkt in der Plattform. Das gab es vorher nicht."</blockquote>
+        <div class="results">
+          <div class="r"><div class="n">-55%</div><div class="l">Vertragsprüfung</div></div>
+          <div class="r"><div class="n">12</div><div class="l">Standorte</div></div>
+          <div class="r"><div class="n">98%</div><div class="l">Zufriedenheit</div></div>
+        </div>
+        <div class="person"><span class="av">SM</span><div><div class="nm">Sophie Maier</div><div class="tt">Partnerin, Kreuz & Co. Rechtsanwälte</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FINAL CTA ===== -->
+<section class="final">
+  <div class="wrap">
+    <div class="final-box fade-up">
+      <span class="eyebrow" style="justify-content:center">Bereit für sichere KI?</span>
+      <h2 class="serif">Starten Sie heute — mit voller Kontrolle über Ihre Daten.</h2>
+      <p>In wenigen Minuten einsatzbereit. Keine Kreditkarte nötig, kein Risiko, kein Datenabfluss.</p>
+      <div class="final-cta">
+        <a href="#" class="btn btn-primary">Kostenlos starten</a>
+        <a href="#" class="btn btn-ghost">Demo buchen</a>
+      </div>
+      <div class="final-trust">Vertraut von 2.400+ Unternehmen · EU-Hosting · DSGVO-konform · kein Training mit Ihren Daten</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#" class="logo">
+          <span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="14.5" r="3" fill="#fff"/></svg></span>
+          <span>relation<b>flow</b></span>
+        </a>
+        <p>Die DSGVO-konforme, multi-Modell KI-Plattform für den deutschen Mittelstand. Entwickelt für deutsche Compliance.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Produkt</h4>
+        <ul>
+          <li><a href="relationflow_feature_multimodell.html">Multi-Modell Access</a></li>
+          <li><a href="relationflow_feature_agents.html">Intelligente Agents</a></li>
+          <li><a href="#">Spaces & Collaboration</a></li>
+          <li><a href="#">Bring Your Own Model</a></li>
+          <li><a href="#">Versionierung & Audit</a></li>
+          <li><a href="#pricing">Preise</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Ressourcen</h4>
+        <ul>
+          <li><a href="#">Blog & Insights</a></li>
+          <li><a href="#">Dokumentation</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">Webinare & Events</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Sicherheit</h4>
+        <ul>
+          <li><a href="#">DSGVO-Konformität</a></li>
+          <li><a href="#">EU-Hosting Details</a></li>
+          <li><a href="#">Verschlüsselung</a></li>
+          <li><a href="#">Enterprise Security</a></li>
+          <li><a href="#">Zertifikate & Standards</a></li>
+        </ul>
+      </div>
+      <div class="foot-col news">
+        <h4>Kontakt</h4>
+        <p>Bleiben Sie informiert über sichere KI für den Mittelstand.</p>
+        <form class="news-form" onsubmit="return false">
+          <input type="email" placeholder="Ihre E-Mail-Adresse" aria-label="E-Mail für Newsletter">
+          <button class="btn btn-primary" type="submit">Abonnieren</button>
+        </form>
+        <div class="social">
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.5 8.65 21 11.1 21 14.3V21h-4v-5.9c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.5-2.25 3.1V21H9z"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M17.5 3h3l-6.6 7.5L21.7 21h-5.9l-4.3-5.6L6.4 21H3.4l7-8L2.7 3h6l3.9 5.2zM16.4 19h1.7L7.7 4.8H5.9z"/></svg></a>
+          <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.4 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 015 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10.1 10.1 0 0022 12.3C22 6.6 17.5 2 12 2z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 12s0-3.2-.4-4.7c-.2-.8-.9-1.5-1.7-1.7C19.4 5.2 12 5.2 12 5.2s-7.4 0-8.9.4c-.8.2-1.5.9-1.7 1.7C1 8.8 1 12 1 12s0 3.2.4 4.7c.2.8.9 1.5 1.7 1.7 1.5.4 8.9.4 8.9.4s7.4 0 8.9-.4c.8-.2 1.5-.9 1.7-1.7.4-1.5.4-4.7.4-4.7zM9.8 15.2V8.8l6 3.2z"/></svg></a>
+        </div>
+        <div class="lang" role="group" aria-label="Sprache">
+          <button class="active">DE</button><button>EN</button>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="copy">© 2026 relationflow.io GmbH · Alle Rechte vorbehalten · <a href="#" style="color:var(--muted)">Impressum</a> · <a href="#" style="color:var(--muted)">Datenschutz</a> · <a href="#" style="color:var(--muted)">AGB</a></div>
+      <div class="badges">
+        <span class="badge-pill"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 8-7 9.5C8 19 5 15.5 5 11V6z" stroke-width="1.8" stroke-linejoin="round"/></svg>DSGVO-konform</span>
+        <span class="badge-pill"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke-width="1.8"/><path d="M3 12h18" stroke-width="1.8"/></svg>EU-Hosting</span>
+        <span class="badge-pill"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="11" rx="2" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke-width="1.8" stroke-linecap="round"/></svg>AES-256</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Hamburger / mobile menu
+  var ham=document.getElementById('hamburger');
+  var mob=document.getElementById('mobileMenu');
+  ham.addEventListener('click',function(){
+    var open=mob.classList.toggle('open');
+    ham.classList.toggle('active',open);
+    ham.setAttribute('aria-expanded',open);
+    document.body.style.overflow=open?'hidden':'';
+  });
+  // Mobile accordions
+  document.querySelectorAll('.mobile-menu .m-trigger').forEach(function(t){
+    var grp=t.parentElement;
+    if(!grp.querySelector('.m-sub'))return; // skip plain links
+    t.addEventListener('click',function(){grp.classList.toggle('open');});
+  });
+  // Close mobile menu on link click
+  document.querySelectorAll('.mobile-menu a').forEach(function(a){
+    a.addEventListener('click',function(){
+      mob.classList.remove('open');ham.classList.remove('active');
+      ham.setAttribute('aria-expanded',false);document.body.style.overflow='';
+    });
+  });
+  // Desktop dropdowns: keyboard support
+  document.querySelectorAll('.nav-item .nav-trigger[role="button"]').forEach(function(tr){
+    tr.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();tr.closest('.nav-item').classList.toggle('open');}
+    });
+  });
+
+  // Pricing toggle
+  var sw=document.getElementById('priceSwitch');
+  var lblM=document.getElementById('lblMonth'),lblY=document.getElementById('lblYear');
+  sw.addEventListener('click',function(){
+    var yearly=sw.classList.toggle('yearly');
+    lblM.classList.toggle('active',!yearly);
+    lblY.classList.toggle('active',yearly);
+    document.querySelectorAll('.amt[data-m]').forEach(function(el){
+      el.innerHTML=yearly?el.getAttribute('data-y'):el.getAttribute('data-m');
+    });
+    document.querySelectorAll('.price-note[data-mnote]').forEach(function(el){
+      el.textContent=yearly?el.getAttribute('data-ynote'):el.getAttribute('data-mnote');
+    });
+  });
+
+  // Scroll fade-up
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+  },{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.fade-up').forEach(function(el){io.observe(el);});
+})();
+</script>
+
+</body>
+</html>
